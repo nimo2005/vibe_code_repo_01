@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-text: #1a1a2e;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-blue: #4f6ef7;
+  --color-blue-hover: #3b5de5;
+  --color-green: #22c55e;
+  --color-green-dark: #16a34a;
+  --color-red: #ef4444;
+}
+
+.dark {
+  --color-bg: #0f0f1a;
+  --color-surface: #1a1a2e;
+  --color-text: #e8e8f0;
+  --color-text-secondary: #9ca3af;
+  --color-border: #2d2d44;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+input, textarea, button {
+  -webkit-appearance: none;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: slideDown 0.2s ease-out;
+}
