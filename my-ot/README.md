@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My OT (Overtime Tracker)
+
+This is an Overtime (OT) tracking web application built with [Next.js](https://nextjs.org), TypeScript, Tailwind CSS, and Supabase for authentication and database storage.
+
+## Features
+- **Overtime Logging**: Log date, start time, end time, total hours calculated automatically, and reason.
+- **History Review**: View and manage past OT logs (`/review`).
+- **Authentication**: Secure login via Supabase Auth (`/login`).
+- **Dark/Light Mode**: Toggle between themes.
+
+---
+
+This project was bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
