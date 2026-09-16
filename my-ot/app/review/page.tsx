@@ -20,7 +20,17 @@ export default function ReviewPage() {
 
   const fetchLogs = async () => {
     setLoading(true); setError(null);
-    const { data, error: fetchError } = await supabase.from('ot_logs').select('*').order('date', { ascending: false });
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setError('Not authenticated');
+      setLoading(false);
+      return;
+    }
+    const { data, error: fetchError } = await supabase
+      .from('ot_logs')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('date', { ascending: false });
     if (fetchError) { setError(fetchError.message); setLoading(false); return; }
     setLogs(data || []); setLoading(false);
   };
@@ -30,7 +40,16 @@ export default function ReviewPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this entry?')) return;
     setDeletingId(id);
-    const { error: deleteError } = await supabase.from('ot_logs').delete().eq('id', id);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setDeletingId(null);
+      return;
+    }
+    const { error: deleteError } = await supabase
+      .from('ot_logs')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', user.id);
     if (deleteError) { setError(deleteError.message); setDeletingId(null); return; }
     setLogs(logs.filter((log: any) => log.id !== id));
     setDeletingId(null);

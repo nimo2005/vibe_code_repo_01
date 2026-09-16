@@ -62,9 +62,24 @@ export default function HomePage() {
     if (!date || !startTime || !endTime || !reason) { setError('Please fill in all fields'); return; }
     if (startError || endError) { setError('Fix time errors first'); return; }
     setLoading(true); setError(null); setSuccessMessage(null);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setError('Not authenticated');
+      setLoading(false);
+      return;
+    }
+
     const { error: insertError } = await supabase
       .from('ot_logs')
-      .insert([{ date, start_time: startTime, end_time: endTime, total_hours: parseFloat((totalMinutes / 60).toFixed(2)), reason }]);
+      .insert([{ 
+        date, 
+        start_time: startTime, 
+        end_time: endTime, 
+        total_hours: parseFloat((totalMinutes / 60).toFixed(2)), 
+        reason,
+        user_id: user.id 
+      }]);
     if (insertError) { setError(insertError.message); setLoading(false); return; }
     setSuccessMessage('Saved!'); setLoading(false);
     setDate(new Date().toISOString().split('T')[0]); setStartTime(''); setEndTime(''); setReason(''); setTotalMinutes(0);
